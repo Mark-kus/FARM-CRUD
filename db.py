@@ -3,15 +3,18 @@ from models import Task
 
 from config.prod import DATABASE_URL
 
-ID = "_id"
+TITLE = "title"
 client = AsyncIOMotorClient(DATABASE_URL)
 database = client.taskdatabase # Database name
 
 """ Database collections """
 tasks_collection = database.tasks
 
-async def get_one_task(id):
-    return await tasks_collection.find_one({ID: id})
+async def get_one_task_by_title(title):
+    task = await tasks_collection.find_one({TITLE: title})
+    if task is None:
+        return None
+    return Task(**task)
 
 async def get_many_tasks():
     tasks = []
@@ -21,13 +24,13 @@ async def get_many_tasks():
     return tasks
 
 async def create_one_task(task):
-    new_task = await tasks_collection.insert_one(task)
-    created_task = await get_one_task(new_task.inserted_id)
+    await tasks_collection.insert_one(task)
+    created_task = await get_one_task_by_title(task['title'])
     return created_task
 
-async def update_one_task(id: str, task):
-    await tasks_collection.update_one({ID: id}, {"$set": task})
-    return await get_one_task(id)
+async def update_one_task(title: str, task):
+    await tasks_collection.update_one({TITLE: title}, {"$set": task.to_dict()})
+    return await get_one_task_by_title(task.title)
 
-async def delete_one_task(id: str):
-    return await tasks_collection.delete_one({ID: id})
+async def delete_one_task(title: str):
+    return await tasks_collection.delete_one({TITLE: title})
