@@ -28,9 +28,11 @@ async def create_one_task(task):
     created_task = await get_one_task_by_title(task['title'])
     return created_task
 
-async def update_one_task(title: str, task):
-    await tasks_collection.update_one({TITLE: title}, {"$set": task.to_dict()})
-    return await get_one_task_by_title(task.title)
+async def update_one_task(title: str, data):
+    task = {k:v for k, v in data.dict().items() if v is not None}
+    await tasks_collection.update_one({TITLE: title}, {"$set": task})
+    searchBy = title if task.get("title") is None else task.get("title")
+    return await get_one_task_by_title(searchBy)
 
 async def delete_one_task(title: str):
     return await tasks_collection.delete_one({TITLE: title})

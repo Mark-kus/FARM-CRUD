@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from models import Task
+from schemas import UpdateTask
 from db import \
 get_many_tasks, \
 create_one_task, \
@@ -20,7 +21,7 @@ async def get_task(title: str):
         return task
     raise HTTPException(404, f"Tarea con title {title} no encontrada")
 
-@app.post("/task", response_model=Task)
+@app.post("/task", response_model=Task, status_code=201)
 async def post_task(task: Task):    
 
     taskFound = await get_one_task_by_title(task.title)
@@ -33,8 +34,9 @@ async def post_task(task: Task):
     raise HTTPException(400, "Algo salió mal")
 
 @app.put("/task/{title}")
-async def update_task(title: str, task: Task):
+async def update_task(title: str, task: UpdateTask):
     task_existing = await get_one_task_by_title(title)
+    print(task_existing)
     if task_existing is None:
         raise HTTPException(404, "No existe")
     return await update_one_task(title, task)
