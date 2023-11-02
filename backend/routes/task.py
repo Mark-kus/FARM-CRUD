@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from backend.models.models import Task
-from backend.schemas.schemas import UpdateTask
+from models.models import Task
+from schemas.schemas import UpdateTask
 from db import \
     get_many_tasks, \
     create_one_task, \
