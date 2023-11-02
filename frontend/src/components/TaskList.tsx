@@ -16,7 +16,7 @@ function TaskList() {
   }, [shouldFetch])
 
   return (
-    <ul className='grid grid-cols-3 gap-2 m-2'>
+    <ul className='grid grid-cols-3 gap-2'>
       {allTasks.map((task, i) => (
         <TaskCard
           key={i}

@@ -27,9 +27,9 @@ function TaskCard({ task, setShouldFetch, shouldFetch }: Props) {
   }
 
   return (
-    <li className='flex justify-between items-center border border-zinc-400 '>
+    <li className='flex justify-between items-center border border-zinc-300 '>
       <div
-        className='p-4 w-full bg-zinc-300 hover:cursor-pointer hover:bg-zinc-400'
+        className='p-4 w-full bg-zinc-800 hover:cursor-pointer hover:bg-zinc-700'
         onClick={() => navigate(`tasks/${task.title}`)}>
         <h2>{task.title}</h2>
         <p>{task.description}</p>
@@ -38,7 +38,7 @@ function TaskCard({ task, setShouldFetch, shouldFetch }: Props) {
         disabled={isLoading}
         onBlur={() => setConfirmation(false)}
         onClick={() => handleClick(task.title)}
-        className='h-full w-1/6 bg-zinc-300 hover:cursor-pointer hover:bg-zinc-400'>
+        className='h-full w-1/6 bg-zinc-800 hover:cursor-pointer hover:bg-zinc-700'>
         {confirmation ? '❌' : '🛑'}
       </button>
     </li>
