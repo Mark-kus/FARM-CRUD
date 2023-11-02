@@ -58,6 +58,7 @@ function TaskForm() {
           type='text'
           name='title'
           id='title'
+          placeholder='Titulo'
           value={title}
           onChange={({ target: { value } }) => setTitle(value)}
           className={inputCls}
@@ -67,6 +68,7 @@ function TaskForm() {
         <textarea
           name='description'
           id='description'
+          placeholder='Descripción'
           value={description}
           onChange={({ target: { value } }) => setDescription(value)}
           rows={10}

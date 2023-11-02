@@ -10,7 +10,7 @@ function TaskList() {
   useEffect(() => {
     const getTasks = async () => {
       const { data } = await fetchTasks()
-      if (data.length) setAllTasks(data)
+      setAllTasks(data)
     }
     getTasks()
   }, [shouldFetch])
