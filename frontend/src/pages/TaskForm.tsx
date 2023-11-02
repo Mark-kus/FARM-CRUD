@@ -52,7 +52,8 @@ function TaskForm() {
     <div className='flex justify-center items-center h-[calc(100vh-10rem)]'>
       <form
         onSubmit={handleSubmit}
-        className='bg-zinc-300 p-10'>
+        className='bg-zinc-950 p-10'>
+        <h1 className='text-3xl font-bold my-4'>{taskTitle ? 'Actualizar Tarea' : 'Crear Tarea'}</h1>
         <input
           type='text'
           name='title'
@@ -78,13 +79,13 @@ function TaskForm() {
         <div className='flex'>
           <a
             href='/'
-            className='block text-center w-1/2 py-2 px-3 bg-white hover:bg-zinc-400'>
-            Back
+            className='block text-center w-1/2 py-2 px-3 bg-zinc-600 hover:bg-zinc-800'>
+            Cancelar
           </a>
           <button
-            className={`w-1/2 py-2 px-3 bg-white hover:bg-zinc-400 ${isLoading ? 'text-zinc-400' : ''}`}
+            className={`w-1/2 py-2 px-3 bg-zinc-600 hover:bg-zinc-800 ${isLoading ? 'text-zinc-400' : ''}`}
             disabled={isLoading}>
-            {title ? 'Update' : 'Save'}
+            {title ? 'Actualizar' : 'Guardar'}
           </button>
         </div>
       </form>

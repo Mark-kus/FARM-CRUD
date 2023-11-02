@@ -7,7 +7,7 @@ function Navbar() {
         <h1 className='text-3xl font-bold'>App de Tareas</h1>
       </Link>
 
-      <Link to='/tasks/new'>Crear nuevo</Link>
+      <Link to='/tasks/new' className='bg-zinc-950 font-bold py-2 px-4 rounded hover:bg-zinc-700'>Crear nuevo</Link>
     </header>
   )
 }
