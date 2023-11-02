@@ -1,10 +1,10 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 from models.models import Task
 
-from config.prod import DATABASE_URL
+from decouple import config
 
 TITLE = "title"
-client = AsyncIOMotorClient(DATABASE_URL)
+client = AsyncIOMotorClient(config('DATABASE_URL'))
 database = client.taskdatabase # Database name
 
 """ Database collections """
