@@ -1,5 +1,5 @@
 from motor.motor_asyncio import AsyncIOMotorClient
-from models import Task
+from backend.models.models import Task
 
 from config.prod import DATABASE_URL
 
