@@ -25,7 +25,7 @@ async def get_task(title: str):
     task = await get_one_task_by_title(title)
     if task is None:
         raise HTTPException(404, f"Tarea con title {title} no encontrada")
-    return {"data": task}
+    return task
 
 
 @task.post("/", response_model=Task, status_code=201)
@@ -38,7 +38,7 @@ async def post_task(task: Task):
     created_task = await create_one_task(task.model_dump())  # type: ignore
     if created_task is None:
         raise HTTPException(400, "Algo salió mal")
-    return {"data": created_task}
+    return created_task
 
 
 @task.put("/{title}")
