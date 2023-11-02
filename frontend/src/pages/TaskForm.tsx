@@ -1,7 +1,7 @@
 import { FormEvent, useState, useEffect } from 'react'
-import { createTask, fetchTaskByTitle } from '../services/tasks'
+import { createTask, fetchTaskByTitle, updateTask } from '../services/tasks'
 import type { Task } from '../interfaces/task.interface'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const inputCls = 'border-2 block py-2 px-3 mb-4 w-full text-black'
 
@@ -11,6 +11,7 @@ function TaskForm() {
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
+  const navigate = useNavigate()
   const { taskTitle } = useParams<string>()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -23,10 +24,9 @@ function TaskForm() {
       const taskObject: Task = { title, description, completed: false }
 
       try {
-        await createTask(taskObject)
-        setTitle('')
-        setDescription('')
-        if (error) setError('')
+        if (!taskTitle) await createTask(taskObject)
+        else await updateTask(taskObject)
+        navigate('/')
       } catch (err) {
         setError(err.detail)
       } finally {
@@ -60,7 +60,7 @@ function TaskForm() {
           value={title}
           onChange={({ target: { value } }) => setTitle(value)}
           className={inputCls}
-          disabled={isLoading}
+          disabled={isLoading || Boolean(taskTitle)}
           autoFocus
         />
         <textarea
@@ -70,7 +70,8 @@ function TaskForm() {
           onChange={({ target: { value } }) => setDescription(value)}
           rows={10}
           className={inputCls}
-          disabled={isLoading}></textarea>
+          disabled={isLoading}
+        />
 
         {error && <p className='text-rose-600 text-center mb-4'>{error}</p>}
 

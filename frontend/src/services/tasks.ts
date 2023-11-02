@@ -26,3 +26,14 @@ export const fetchTaskByTitle = async (title: string): Promise<Task> => {
   })
   return await response.json()
 }
+
+export const updateTask = async (task: Task): Promise<Task> => {
+  const response = await fetch(`${BACKEND_URL}/tasks/${task.title}`, {
+    method: 'PUT',
+    body: JSON.stringify(task),
+    headers: {
+      'Content-type': 'application/json'
+    }
+  })
+  return await response.json()
+}
