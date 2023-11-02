@@ -12,7 +12,11 @@ function App() {
             element={<Home />}
           />
           <Route
-            path='/new'
+            path='/tasks/new'
+            element={<TaskForm />}
+          />
+          <Route
+            path='/tasks/:taskTitle'
             element={<TaskForm />}
           />
         </Routes>

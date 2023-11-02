@@ -7,7 +7,7 @@ export const createTask = async (task: Task): Promise<Task> => {
     method: 'POST',
     body: JSON.stringify(task),
     headers: {
-      "Content-type": "application/json"
+      'Content-type': 'application/json'
     }
   })
   return await response.json()
@@ -15,6 +15,13 @@ export const createTask = async (task: Task): Promise<Task> => {
 
 export const fetchTasks = async (): Promise<AllTasks> => {
   const response = await fetch(`${BACKEND_URL}/tasks/`, {
+    method: 'GET'
+  })
+  return await response.json()
+}
+
+export const fetchTaskByTitle = async (title: string): Promise<Task> => {
+  const response = await fetch(`${BACKEND_URL}/tasks/${title}`, {
     method: 'GET'
   })
   return await response.json()

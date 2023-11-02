@@ -20,7 +20,7 @@ function Home() {
       <header className='flex justify-between items-center'>
         <h1 className='p-2 text-3xl font-bold'>Homepage</h1>
         <a
-          href='/new'
+          href='/tasks/new'
           className='p-2 text-3xl hover:bg-zinc-200'>
           New
         </a>

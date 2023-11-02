@@ -1,6 +1,7 @@
-import { FormEvent, useState } from 'react'
-import { createTask } from '../services/tasks'
+import { FormEvent, useState, useEffect } from 'react'
+import { createTask, fetchTaskByTitle } from '../services/tasks'
 import type { Task } from '../interfaces/task.interface'
+import { useParams } from 'react-router-dom'
 
 const inputCls = 'border-2 block py-2 px-3 mb-4 w-full text-black'
 
@@ -9,6 +10,8 @@ function TaskForm() {
   const [description, setDescription] = useState<string>('')
   const [error, setError] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const { taskTitle } = useParams<string>()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
@@ -32,6 +35,19 @@ function TaskForm() {
     }
   }
 
+  useEffect(() => {
+    if (taskTitle) {
+      const getTaskData = async () => {
+        setIsLoading(true)
+        const task = await fetchTaskByTitle(taskTitle)
+        setTitle(task.title)
+        setDescription(task.description)
+        setIsLoading(false)
+      }
+      getTaskData()
+    }
+  }, [taskTitle])
+
   return (
     <div className='flex justify-center items-center h-[calc(100vh-10rem)]'>
       <form
@@ -44,6 +60,7 @@ function TaskForm() {
           value={title}
           onChange={({ target: { value } }) => setTitle(value)}
           className={inputCls}
+          disabled={isLoading}
           autoFocus
         />
         <textarea
@@ -52,7 +69,8 @@ function TaskForm() {
           value={description}
           onChange={({ target: { value } }) => setDescription(value)}
           rows={10}
-          className={inputCls}></textarea>
+          className={inputCls}
+          disabled={isLoading}></textarea>
 
         {error && <p className='text-rose-600 text-center mb-4'>{error}</p>}
 
@@ -65,7 +83,7 @@ function TaskForm() {
           <button
             className={`w-1/2 py-2 px-3 bg-white hover:bg-zinc-400 ${isLoading ? 'text-zinc-400' : ''}`}
             disabled={isLoading}>
-            Save
+            {title ? 'Update' : 'Save'}
           </button>
         </div>
       </form>
