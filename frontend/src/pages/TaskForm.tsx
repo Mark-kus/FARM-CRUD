@@ -10,8 +10,12 @@ function TaskForm() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
+
+    const form = e.target as HTMLFormElement
     const taskObject: Task = { title, description, completed: false }
+
     createTask(taskObject)
+    form.reset()
   }
 
   return (
