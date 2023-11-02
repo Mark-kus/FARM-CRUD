@@ -2,7 +2,7 @@ import type { Task } from '../interfaces/task.interface'
 
 function TaskList({ allTasks }: { allTasks: Task[] }) {
   return (
-    <ul>
+    <ul className='grid grid-cols-3 gap-2 m-2'>
       {allTasks.map((task) => {
         return (
           <li
