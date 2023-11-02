@@ -1,20 +1,6 @@
-import { useEffect, useState } from 'react'
-import { fetchTasks } from '../services/tasks'
 import TaskList from '../components/TaskList'
 
-import type { Task } from '../interfaces/task.interface'
-
 function Home() {
-  const [allTasks, setAllTasks] = useState<Task[]>([])
-
-  useEffect(() => {
-    const getTasks = async () => {
-      const { data } = await fetchTasks()
-      if (data.length) setAllTasks(data)
-    }
-    getTasks()
-  }, [])
-
   return (
     <>
       <header className='flex justify-between items-center'>
@@ -25,7 +11,7 @@ function Home() {
           New
         </a>
       </header>
-      <TaskList allTasks={allTasks} />
+      <TaskList />
     </>
   )
 }

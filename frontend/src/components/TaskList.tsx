@@ -1,11 +1,29 @@
 import type { Task } from '../interfaces/task.interface'
+import { useEffect, useState } from 'react'
+import { fetchTasks } from '../services/tasks'
 import TaskCard from './TaskCard'
 
-function TaskList({ allTasks }: { allTasks: Task[] }) {
+function TaskList() {
+  const [allTasks, setAllTasks] = useState<Task[]>([])
+  const [shouldFetch, setShouldFetch] = useState<boolean>(false)
+
+  useEffect(() => {
+    const getTasks = async () => {
+      const { data } = await fetchTasks()
+      if (data.length) setAllTasks(data)
+    }
+    getTasks()
+  }, [shouldFetch])
+
   return (
     <ul className='grid grid-cols-3 gap-2 m-2'>
-      {allTasks.map((task) => (
-        <TaskCard task={task} />
+      {allTasks.map((task, i) => (
+        <TaskCard
+          key={i}
+          shouldFetch={shouldFetch}
+          setShouldFetch={setShouldFetch}
+          task={task}
+        />
       ))}
     </ul>
   )

@@ -37,3 +37,10 @@ export const updateTask = async (task: Task): Promise<Task> => {
   })
   return await response.json()
 }
+
+export const deleteTask = async (title: string): Promise<Task> => {
+  const response = await fetch(`${BACKEND_URL}/tasks/${title}`, {
+    method: 'DELETE'
+  })
+  return await response.json()
+}
