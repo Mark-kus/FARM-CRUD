@@ -85,7 +85,7 @@ function TaskForm() {
           <button
             className={`w-1/2 py-2 px-3 bg-zinc-600 hover:bg-zinc-800 ${isLoading ? 'text-zinc-400' : ''}`}
             disabled={isLoading}>
-            {title ? 'Actualizar' : 'Guardar'}
+            {taskTitle ? 'Actualizar' : 'Guardar'}
           </button>
         </div>
       </form>
