@@ -1,4 +1,4 @@
-import { AllTasks, Task } from '../interfaces/task.interface'
+import { AllTasks, Task, UpdateTask } from '../interfaces/task.interface'
 
 const BACKEND_URL = 'http://localhost:8000'
 
@@ -27,7 +27,7 @@ export const fetchTaskByTitle = async (title: string): Promise<Task> => {
   return await response.json()
 }
 
-export const updateTask = async (task: Task): Promise<Task> => {
+export const updateTask = async (task: UpdateTask): Promise<Task> => {
   const response = await fetch(`${BACKEND_URL}/tasks/${task.title}`, {
     method: 'PUT',
     body: JSON.stringify(task),
