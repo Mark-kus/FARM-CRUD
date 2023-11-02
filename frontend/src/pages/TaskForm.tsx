@@ -7,15 +7,29 @@ const inputCls = 'border-2 block py-2 px-3 mb-4 w-full text-black'
 function TaskForm() {
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
+  const [error, setError] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
+    if (title === '' || description === '') {
+      setError('No puede haber campos vacios')
+    } else {
+      setIsLoading(true)
 
-    const form = e.target as HTMLFormElement
-    const taskObject: Task = { title, description, completed: false }
+      const taskObject: Task = { title, description, completed: false }
 
-    createTask(taskObject)
-    form.reset()
+      try {
+        await createTask(taskObject)
+        setTitle('')
+        setDescription('')
+        if (error) setError('')
+      } catch (err) {
+        setError(err.detail)
+      } finally {
+        setIsLoading(false)
+      }
+    }
   }
 
   return (
@@ -39,13 +53,20 @@ function TaskForm() {
           onChange={({ target: { value } }) => setDescription(value)}
           rows={10}
           className={inputCls}></textarea>
+
+        {error && <p className='text-rose-600 text-center mb-4'>{error}</p>}
+
         <div className='flex'>
           <a
             href='/'
             className='block text-center w-1/2 py-2 px-3 bg-white hover:bg-zinc-400'>
             Back
           </a>
-          <button className='w-1/2 py-2 px-3 bg-white hover:bg-zinc-400'>Save</button>
+          <button
+            className={`w-1/2 py-2 px-3 bg-white hover:bg-zinc-400 ${isLoading ? 'text-zinc-400' : ''}`}
+            disabled={isLoading}>
+            Save
+          </button>
         </div>
       </form>
     </div>
