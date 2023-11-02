@@ -30,6 +30,7 @@ function TaskForm() {
           value={title}
           onChange={({ target: { value } }) => setTitle(value)}
           className={inputCls}
+          autoFocus
         />
         <textarea
           name='description'
@@ -38,7 +39,14 @@ function TaskForm() {
           onChange={({ target: { value } }) => setDescription(value)}
           rows={10}
           className={inputCls}></textarea>
-        <button className='w-full py-2 px-3 bg-white'>Save</button>
+        <div className='flex'>
+          <a
+            href='/'
+            className='block text-center w-1/2 py-2 px-3 bg-white hover:bg-zinc-400'>
+            Back
+          </a>
+          <button className='w-1/2 py-2 px-3 bg-white hover:bg-zinc-400'>Save</button>
+        </div>
       </form>
     </div>
   )
